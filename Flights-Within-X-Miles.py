@@ -46,10 +46,11 @@ while True:
                 if alt <= MaxHeight:
                     # Add timestamp and date to the output
                     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                    print(f"{now} | Flight {flight} | Speed: {speed} | Distance: {distance} miles | Altitude: {alt} ft")
+                    #print(f"{now} | Flight {flight} | Speed: {speed} | Distance: {distance} miles | Altitude: {alt} ft")
+                    print(f"{now} | Flight {flight} | Speed: {speed} | Distance: {distance} miles | Altitude: {alt} ft | Latitude: {lat} | Longitude: {lon}")
+                    
 
     except Exception as e:
         print("Error:", e)
 
     time.sleep(2)
-
