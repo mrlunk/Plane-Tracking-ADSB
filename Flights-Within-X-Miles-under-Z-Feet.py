@@ -1,5 +1,6 @@
 """
-Basic python code example for Real-time Aircraft notifications within a specified radius and altitude range. (overhead traffic notification basics)
+Basic python code example for Real-time Aircraft notifications within
+a specified radius and altitude range. (overhead traffic notification basics)
 
 
 This script retrieves information about aircraft from a local flight tracker
