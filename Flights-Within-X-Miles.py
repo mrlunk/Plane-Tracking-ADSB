@@ -30,7 +30,7 @@ while True:
 
         # Loop through all the aircraft in the JSON data
         for aircraft in data['aircraft']:
-            # Get the flight number, speed, latitude, longitude, and altitude
+            # Get the flight information
             flight = aircraft.get('flight')
             speed = aircraft.get('gs')
             lat = aircraft.get('lat')
