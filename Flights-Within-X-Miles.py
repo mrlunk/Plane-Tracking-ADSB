@@ -15,6 +15,10 @@ from datetime import datetime
 # Home-coordinates
 home_coords = (52.43362, 4.65424)
 
+# Log all planes within MaxDistance and MinHeight.
+MaxDistance = 5 # Nautical Miles
+MaxHeight = 4000  # Foot
+
 # URL for the local flightaware piaware info
 url = "http://192.168.2.13:8080/data/aircraft.json"
 
@@ -38,8 +42,8 @@ while True:
             distance = geodesic(home_coords, plane_coords).miles
 
             # If the distance is within 5 miles, print the flight info
-            if distance <= 2.5:
-                if alt <= 4000:
+            if distance <= MaxDistance:
+                if alt <= MaxHeight:
                     # Add timestamp and date to the output
                     now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
                     print(f"{now} | Flight {flight} | Speed: {speed} | Distance: {distance} miles | Altitude: {alt} ft")
@@ -48,3 +52,4 @@ while True:
         print("Error:", e)
 
     time.sleep(2)
+
