@@ -2,17 +2,15 @@
 This script retrieves information about aircraft from a local flight tracker
 (PiAware with FlightAware Pro Stick)
 and calculates the distance between the plane's coordinates and a set of home
-coordinates. If the plane is within 3 miles of the home coordinates and at an
-altitude of 3000 feet or lower, the flight information is printed.
-The script continuously runs in an infinite loop, with a 2-second pause between
-each iteration. 
-The script makes use of the requests library to retrieve data from a URL and the
-geopy library to calculate the geodesic distance between two sets of coordinates. 
+coordinates. If the plane is within X miles of the home coordinates and at an
+altitude of Z feet or lower, the flight information is printed to console.
+(Later this will be saved to database...) 
 """
 
 import requests
 from geopy.distance import geodesic
 import time
+from datetime import datetime
 
 # Home-coordinates
 home_coords = (52.43362, 4.65424)
@@ -40,9 +38,11 @@ while True:
             distance = geodesic(home_coords, plane_coords).miles
 
             # If the distance is within 5 miles, print the flight info
-            if distance <= 3:
-                if alt <= 3000:
-                    print(f"Flight {flight} | Speed: {speed} | Distance: {distance} miles | Altitude: {alt} ft")
+            if distance <= 2.5:
+                if alt <= 4000:
+                    # Add timestamp and date to the output
+                    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                    print(f"{now} | Flight {flight} | Speed: {speed} | Distance: {distance} miles | Altitude: {alt} ft")
 
     except Exception as e:
         print("Error:", e)
