@@ -89,8 +89,6 @@ while True:
                     f"{flight} | Speed: {data['speed']} | Distance: {data['distance']} miles | Altitude: {data['altitude']} ft | Latitude: {data['latitude']} | Longitude: {data['longitude']}\n"
                 )
                 f.write(closest_approach)
-                # Every Flight basic info is printed to console while scanning, only closest is saved to file.
-                print(f"{flight} | Dist: {data['distance']} miles | Alt: {data['altitude']} ft")
 
     except Exception as e:
         print("Error:", e)
