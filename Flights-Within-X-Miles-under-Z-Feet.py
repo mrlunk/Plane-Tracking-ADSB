@@ -9,6 +9,9 @@ and calculates the distance between the plane's coordinates and a set of home
 coordinates. If the plane is within X miles of the home coordinates and at an
 altitude of Z feet or lower, the flight information is printed to console.
 (Later this will be saved to database...) 
+
+Script by: MrLunk April 2023
+Source: https://github.com/mrlunk/Plane-Tracking-ADSB 
 """
 
 import requests
