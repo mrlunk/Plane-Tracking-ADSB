@@ -1,4 +1,6 @@
 """
+UNDER DEVELOPMENT !!!
+
 This Python script is used to track the flights that are within a certain
 distance and altitude of the given home coordinates using ADS-B data.
 The script uses the requests module to get the JSON data from a local
