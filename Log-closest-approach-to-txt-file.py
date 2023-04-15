@@ -92,7 +92,7 @@ while True:
                     f"{now} |  Flight {flight} | Spd: {data['speed']} | Dist: {data['distance']} Nm | Alt: {data['altitude']} ft | Lat: {data['latitude']} | Lon: {data['longitude']}\n"
                 )
                 f.write(closest_approach)
-                print(f"{now} |  Flight {flight} | Spd: {data['speed']} | Dist: {data['distance']} Nm | Alt: {data['altitude']} ft | Lat: {data['latitude']} | Lon: {data['longitude']}\n")
+                print(f"{now} |  Flight {flight} | Spd: {data['speed']} | Dist: {data['distance']} Nm | Alt: {data['altitude']} ft | Lat: {data['latitude']} | Lon: {data['longitude']}")
 
     except Exception as e:
         print("Error:", e)
