@@ -15,7 +15,7 @@ The script can be modified to track flights in a different location or
 within a different range by updating the home coordinates, maximum distance,
 and maximum height.
 
-Script by: MrLunk 20223
+Script by: MrLunk April 2023
 Source: https://github.com/mrlunk/Plane-Tracking-ADSB 
 """
 
@@ -59,7 +59,7 @@ while True:
             plane_coords = (lat, lon)
             distance = geodesic(home_coords, plane_coords).miles
 
-            # If the distance is within 5 miles, print the flight info
+            # If the distance is within given MaxDistance miles and under MaxHeight Miles
             if distance <= MaxDistance:
                 if alt <= MaxHeight:
                     # Check if the flight already exists in the dictionary
@@ -82,13 +82,17 @@ while True:
                             "longitude": lon,
                         }
 
+        # Add timestamp and date to the output
+        now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
         # Write the closest approach of each flight to the output file
         with open(filename, "w") as f:
             for flight, data in flight_dict.items():
                 closest_approach = (
-                    f"{flight} | Speed: {data['speed']} | Distance: {data['distance']} miles | Altitude: {data['altitude']} ft | Latitude: {data['latitude']} | Longitude: {data['longitude']}\n"
+                    f"{now} |  Flight {flight} | Spd: {data['speed']} | Dist: {data['distance']} Nm | Alt: {data['altitude']} ft | Lat: {data['latitude']} | Lon: {data['longitude']}\n"
                 )
                 f.write(closest_approach)
+                print(f"{now} |  Flight {flight} | Spd: {data['speed']} | Dist: {data['distance']} Nm | Alt: {data['altitude']} ft | Lat: {data['latitude']} | Lon: {data['longitude']}\n")
 
     except Exception as e:
         print("Error:", e)
