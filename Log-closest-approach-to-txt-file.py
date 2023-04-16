@@ -1,21 +1,15 @@
 """
 UNDER DEVELOPMENT !!!
 
-This Python script is used to track the flights that are within a certain
-distance and altitude of the given home coordinates using ADS-B data.
-The script uses the requests module to get the JSON data from a local
-dump1090 .json server, which provides information about all the planes in
-the vicinity. The geopy module is used to calculate the distance between
-the home coordinates and the plane coordinates.
+This Python script uses the requests library to retrieve data from
+a Dump1090 ADSB JSON API server, and the geopy library to calculate
+distances between coordinates.
 
-The script sets a maximum distance and a maximum height, within which the
-flights will be tracked. The script stores the closest approach of each
-flight in a dictionary and writes the data to a text file. The script runs
-in a continuous loop, checking for updates every 2 seconds.
+The script continuously loops to monitor the data from the API and
+looks for nearby aircraft that are within a certain distance and altitude
+from a given home location.
 
-The script can be modified to track flights in a different location or
-within a different range by updating the home coordinates, maximum distance,
-and maximum height.
+It then records the flight data of the closest aircraft and writes it to a text file.
 
 Script by: MrLunk April 2023
 Source: https://github.com/mrlunk/Plane-Tracking-ADSB 
