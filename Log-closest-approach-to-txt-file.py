@@ -26,75 +26,66 @@ from geopy.distance import geodesic
 import time
 from datetime import datetime
 
-# Set your Home-coordinates here as precisely as possible
 home_coords = (52.43362, 4.65424)
 
-# Log all planes within MaxDistance and MinHeight.
-MaxDistance = 5 # Nautical Miles (1852m = 1 Nm / 0.53995 Nm = 1 km)
-MaxHeight = 10000  # Foot (3280 ft = 1km)
-
-# URL for the local ADS-B dump1090 info
+MaxDistance = 5 
+MaxHeight = 10000  # 6561 ft = 2km
+ 
 url = "http://192.168.2.13:8080/data/aircraft.json"
 
-# Create a dictionary to store the closest approach of each flight
 flight_dict = {}
 
-# Define the filename for the output file
 filename = "closest_approach.txt"
 
 while True:
     try:
-        # Get the JSON data from the URL
         response = requests.get(url)
         data = response.json()
+        datenow = datetime.now().strftime("%Y-%m-%d")
+        timenow = datetime.now().strftime("%H:%M:%S")
 
-        # Loop through all the aircraft in the JSON data
         for aircraft in data['aircraft']:
-            # Get the flight information
+            hexcode = aircraft.get('hex')
             flight = aircraft.get('flight')
             speed = aircraft.get('gs')
             lat = aircraft.get('lat')
             lon = aircraft.get('lon')
             alt = aircraft.get('alt_baro')
+             
 
-            # Calculate the distance from home-coordinates to the plane coordinates
             plane_coords = (lat, lon)
             distance = geodesic(home_coords, plane_coords).miles
 
-            # If the distance is within given MaxDistance miles and under MaxHeight Miles
             if distance <= MaxDistance:
                 if alt <= MaxHeight:
-                    # Check if the flight already exists in the dictionary
                     if flight in flight_dict:
-                        # Check if the current distance is closer than the stored distance
                         if distance < flight_dict[flight]["distance"]:
-                            # Update the flight information in the dictionary
+                            flight_dict[flight]["hexcode"] = hexcode
                             flight_dict[flight]["speed"] = speed
                             flight_dict[flight]["distance"] = distance
                             flight_dict[flight]["altitude"] = alt
                             flight_dict[flight]["latitude"] = lat
                             flight_dict[flight]["longitude"] = lon
+                            flight_dict[flight]["datenow"] = datenow
+                            flight_dict[flight]["timenow"] = timenow
                     else:
-                        # Add the flight information to the dictionary
                         flight_dict[flight] = {
+                            "hexcode": hexcode,
                             "speed": speed,
                             "distance": distance,
                             "altitude": alt,
                             "latitude": lat,
                             "longitude": lon,
+                            "datenow": datenow,
+                            "timenow": timenow,
                         }
 
-        # Add timestamp and date to the output
-        now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-        # Write the closest approach of each flight to the output file
         with open(filename, "w") as f:
             for flight, data in flight_dict.items():
                 closest_approach = (
-                    f"{now} |  Flight {flight} | Spd: {data['speed']} | Dist: {data['distance']} Nm | Alt: {data['altitude']} ft | Lat: {data['latitude']} | Lon: {data['longitude']}\n"
+                    f"Dt: {data['datenow']} | Ti: {data['timenow']} | Hex: {data['hexcode']} | Flt: {flight} | Spd: {data['speed']} | Dist: {data['distance']} Nm | Alt: {data['altitude']} ft | Lat: {data['latitude']} | Lon: {data['longitude']}\n"
                 )
                 f.write(closest_approach)
-                print(f"{now} |  Flight {flight} | Spd: {data['speed']} | Dist: {data['distance']} Nm | Alt: {data['altitude']} ft | Lat: {data['latitude']} | Lon: {data['longitude']}")
 
     except Exception as e:
         print("Error:", e)
