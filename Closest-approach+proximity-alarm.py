@@ -14,7 +14,8 @@ each aircraft from the home coordinate. If an aircraft meets the specified crite
 is added to a dictionary of flights. If the flight is already in the dictionary, its
 information is updated if the distance to the home coordinate is shorter than previously
 recorded. If an aircraft is within the specified proximity distance and altitude, an alarm
-beep is produced, the alarm beep pitch gets higher the closer to the home coordinates the aircraft get.
+beep is produced, the proximity alarm beep pitch gets higher the closer to the home
+coordinates the aircraft get.
 Finally, the flights in the dictionary are sorted based on distance,
 and the closest approaching aircraft information is written to a text file.
 
